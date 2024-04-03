@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     // Запускаємо Docker контейнер
-                    sh 'docker run -d -p 8080:80 kuzma343/kuzma_branch:version1'
+                    sh 'docker run -d -p 8081:80 kuzma343/kuzma_branch:version1'
                 }
             }
         }
