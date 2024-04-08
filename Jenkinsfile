@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Пушимо зображення на Docker Hub
-                    sh 'docker push kuzma343/kuzma_branch:${BUILD_NUMBER} .'
+                    sh 'docker push kuzma343/kuzma_branch:${BUILD_NUMBER}'
                 }
             }
         }
