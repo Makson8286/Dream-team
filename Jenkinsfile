@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     // Будуємо Docker зображення
-                    sh 'docker build -t kuzma343/kuzma_branch:version1 .'
+                    sh 'docker build -t kuzma343/kuzma_branch:version${BUILD_NUMBER} .'
                 }
             }
         }
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     // Пушимо зображення на Docker Hub
-                    sh 'docker push kuzma343/kuzma_branch:${BUILD_NUMBER}'
+                    sh 'docker push kuzma343/kuzma_branch:version${BUILD_NUMBER}'
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
             steps {
                 script {
                     // Запускаємо Docker контейнер
-                    sh 'docker run -d -p 8081:80 kuzma343/kuzma_branch:version1'
+                    sh 'docker run -d -p 8081:80 kuzma343/kuzma_branch:version${BUILD_NUMBER}'
                 }
             }
         }
