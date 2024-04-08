@@ -1,10 +1,10 @@
-
 pipeline {
     agent any
 
     environment {
         // Додаємо креденшіали для Docker
         DOCKER_CREDENTIALS_ID = 'dockerHub'
+        CONTAINER_NAME = 'kuzma343_kuzma_branch'
     }
    
 
@@ -40,16 +40,29 @@ pipeline {
             }
         }
 
+        stage('Зупинка та видалення старого контейнера') {
+            steps {
+                script {
+                    // Спроба зупинити та видалити старий контейнер, якщо він існує
+                    sh """
+                    if [ \$(docker ps -aq -f name=^${CONTAINER_NAME}\$) ]; then
+                        docker stop ${CONTAINER_NAME}
+                        docker rm ${CONTAINER_NAME}
+                    else
+                        echo "Контейнер ${CONTAINER_NAME} не знайдено. Продовжуємо..."
+                    fi
+                    """
+                }
+            }
+        }
+
         stage('Запуск Docker контейнера') {
             steps {
                 script {
-                    // Запускаємо Docker контейнер
-                    sh 'docker run -d -p 8081:80 kuzma343/kuzma_branch:version${BUILD_NUMBER}'
+                    // Запускаємо Docker контейнер з новим зображенням
+                    sh 'docker run -d -p 8081:80 --name ${CONTAINER_NAME} kuzma343/kuzma_branch:version${BUILD_NUMBER}'
                 }
             }
         }
     }
 }
-        
-        
- 
