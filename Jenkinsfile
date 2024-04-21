@@ -19,6 +19,14 @@ pipeline {
                 }
             }
         }
+        
+        stage('Copy git ') {
+            steps {
+                script {
+                    sh 'git clone --branch maks --single-branch https://github.com/Makson8286/Dream-team.git'
+                }
+            }
+        }
 
         stage('build Docker image') {
             steps {
